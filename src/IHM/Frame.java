@@ -3,6 +3,7 @@ package IHM;
 import main.Controleur;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Color;
@@ -14,7 +15,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
-public class Frame {
+public class Frame extends JFrame
+{
     private Controleur ctrl;
 
     private PanelPaletteCouleur panelPaletteCouleur;

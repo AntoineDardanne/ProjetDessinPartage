@@ -12,7 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class PanelDessin {
+public class PanelDessin extends JPanel
+{
     // On cherche à faire un panel sur lequel lorsque l'on clique, on dessine une forme qui
     // a été sélectionnée dans la palette de forme et qui a une couleur qui a été sélectionnée
     // dans la palette de couleur.

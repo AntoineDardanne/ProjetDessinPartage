@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class PanelPaletteCouleur
+public class PanelPaletteCouleur extends JPanel
 {
     private JPanel panel;
     private ArrayList<JButton> listeBoutons;
