@@ -2,18 +2,9 @@ package IHM;
 
 import main.Controleur;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 
 public class Frame extends JFrame
 {
@@ -25,8 +16,35 @@ public class Frame extends JFrame
 
     public Frame(Controleur ctrl) {
         this.ctrl = ctrl;
-        this.panelPaletteCouleur = new PanelPaletteCouleur();
-        this.panelPaletteForme = new PanelPaletteForme();
-        this.panelDessin = new PanelDessin();
+        this.panelPaletteCouleur = new PanelPaletteCouleur(this.ctrl);
+        this.panelPaletteForme = new PanelPaletteForme(this.ctrl);
+        this.panelDessin = new PanelDessin(this.ctrl);
+
+        this.setTitle("Dessin");
+        this.setSize(2000, 1000);
+        this.setLayout(new BorderLayout());
+        this.setLocation(0, 0);
+        
+        
+        // Ajout des panels
+        this.add(this.panelPaletteCouleur, BorderLayout.SOUTH);
+        this.add(this.panelPaletteForme, BorderLayout.NORTH);
+        this.add(this.panelDessin, BorderLayout.CENTER);
+        
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.setVisible(true);
+
+        
+    }
+
+    // Méthode getPaletteForme
+    public PanelPaletteForme getPaletteForme() {
+        return this.panelPaletteForme;
+    }
+
+    // Méthode getPaletteCouleur
+    public PanelPaletteCouleur getPaletteCouleur() {
+        return this.panelPaletteCouleur;
     }
 }

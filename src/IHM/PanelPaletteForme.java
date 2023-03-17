@@ -3,97 +3,76 @@ package IHM;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import main.Controleur;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class PanelPaletteForme {
+public class PanelPaletteForme extends JPanel
+{
+    private Controleur ctrl;
+
     private JPanel panel;
     private ArrayList<JButton> listeBoutons;
     private String formeSelectionnee;
 
-    public PanelPaletteForme() {
-        panel = new JPanel();
-        panel.setPreferredSize(new Dimension(100, 100));
-        panel.setBackground(Color.WHITE);
-        panel.setLayout(new GridLayout(2, 2));
+    public PanelPaletteForme(Controleur ctrl) 
+    {
+        this.ctrl = ctrl;
+
+        this.panel = new JPanel();
 
         listeBoutons = new ArrayList<JButton>();
 
-        JButton bouton1 = new JButton();
-        bouton1.setText("Carré");
-        bouton1.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                formeSelectionnee = "Carré";
-            }
-        });
-        listeBoutons.add(bouton1);
-
-        JButton bouton2 = new JButton();
-        bouton2.setText("Rond");
-        bouton2.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                formeSelectionnee = "Rond";
-            }
-        });
-        listeBoutons.add(bouton2);
-
-        JButton bouton3 = new JButton();
-        bouton3.setText("Ligne");
-        bouton3.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                formeSelectionnee = "Ligne";
-            }
-        });
-        listeBoutons.add(bouton3);
-
-        JButton bouton4 = new JButton();
-        bouton4.setText("Texte");
-        bouton4.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                formeSelectionnee = "Texte";
-            }
-        });
-        listeBoutons.add(bouton4);
-
-        JButton bouton5 = new JButton();
-        bouton5.setText("Undo");
-        bouton5.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                formeSelectionnee = "Undo";
-            }
-        });
-        listeBoutons.add(bouton5);
-
-        JButton bouton6 = new JButton();
-        bouton6.setText("Plein/Vide");
-        bouton6.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                formeSelectionnee = "Plein/Vide";
-            }
-        });
-        listeBoutons.add(bouton6);
-
-        for (JButton bouton : listeBoutons) {
-            panel.add(bouton);
+        // Création des boutons
+        for (int i = 0; i < 6; i++) {
+            JButton bouton = new JButton();
+            bouton.setBackground(Color.WHITE);
+            bouton.setPreferredSize(new Dimension(125, 50));
+            listeBoutons.add(bouton);
         }
+
+        // Ajout des boutons au panel
+        for (JButton bouton : listeBoutons) {
+            this.panel.add(bouton);
+        }
+
+        // Ajout des noms aux boutons
+        listeBoutons.get(0).setText("Carré");
+        listeBoutons.get(1).setText("Rond");
+        listeBoutons.get(2).setText("Ligne");
+        listeBoutons.get(3).setText("Texte");
+        listeBoutons.get(4).setText("Undo");
+        listeBoutons.get(5).setText("Plein/Vide");
+
+        // Ajout du panel à la palette
+        this.add(this.panel);
+
     }
 
-    public JPanel getPanel() {
-        return panel;
-    }
-
-    public String getFormeSelectionnee() {
+    public String getFormeSelectionnee()
+    {
         return formeSelectionnee;
+    }
+
+    public void ActionPerformed(ActionEvent e)
+    {
+        if (e.getSource() == listeBoutons.get(0)) {
+            formeSelectionnee = "Carré";
+        } else if (e.getSource() == listeBoutons.get(1)) {
+            formeSelectionnee = "Rond";
+        } else if (e.getSource() == listeBoutons.get(2)) {
+            formeSelectionnee = "Ligne";
+        } else if (e.getSource() == listeBoutons.get(3)) {
+            formeSelectionnee = "Texte";
+        } else if (e.getSource() == listeBoutons.get(4)) {
+            formeSelectionnee = "Undo";
+        } else if (e.getSource() == listeBoutons.get(5)) {
+            formeSelectionnee = "Plein/Vide";
+        }
     }
     
 }
