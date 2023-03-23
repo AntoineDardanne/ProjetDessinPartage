@@ -12,7 +12,7 @@ public class Controleur
     public Controleur()
     {
         ihm = new Frame(this);
-        metier = new Metier();
+        metier = new Metier(this);
     }
 
     public static void main(String[] args)
@@ -28,5 +28,9 @@ public class Controleur
     public Metier getMetier()
     {
         return metier;
+    }
+
+    public void dessiner(int x1, int y1, int x2, int y2) {
+        ihm.dessiner(x1, y1, x2, y2);
     }
 }

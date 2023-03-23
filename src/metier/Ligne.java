@@ -28,17 +28,7 @@ public class Ligne
 
 
 
-/*
-    public void mouseClicked(MouseEvent e)
-    {
-        
-    }
 
-    public void mouseReleased(MouseEvent e)
-    {
-
-    }
-*/
     
 }
 

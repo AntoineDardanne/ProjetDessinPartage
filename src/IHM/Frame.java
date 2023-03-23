@@ -47,4 +47,8 @@ public class Frame extends JFrame
     public PanelPaletteCouleur getPaletteCouleur() {
         return this.panelPaletteCouleur;
     }
+
+    public void dessiner(int x1, int y1, int x2, int y2) {
+        this.panelDessin.dessiner(x1, y1, x2, y2);
+    }
 }
