@@ -10,7 +10,6 @@ public class PanelPaletteForme extends JPanel implements ActionListener {
 
     private final FramePaint frame;
     ArrayList<JButton> listeBoutons;
-    //JButton btnCarre, btnRond, btnLigne, btnText, btnUndo, btnPleinVide;
     int selectionForme;
 
     public PanelPaletteForme(FramePaint frame) {
@@ -32,36 +31,9 @@ public class PanelPaletteForme extends JPanel implements ActionListener {
         this.listeBoutons.get(4).setText("Undo");
         this.listeBoutons.get(5).setText("Vide");
 
-        /*
-        this.btnCarre = new JButton("Carre");
-        this.btnRond  = new JButton("Rond");
-        this.btnLigne = new JButton("Ligne");
-        this.btnText =  new JButton("Texte");
-        this.btnUndo = new JButton("Undo");
-        this.btnPleinVide = new JButton("Vide");
-        */
-
-        /*
-        this.add(btnCarre);
-        this.add(btnRond);
-        this.add(btnLigne);
-        this.add(btnText);
-        this.add(btnUndo);
-        this.add(btnPleinVide);
-        */
-
         for (JButton bouton : listeBoutons) {
             this.add(bouton);
         }
-
-        /*
-        this.btnCarre.addActionListener(this);
-        this.btnRond.addActionListener(this);
-        this.btnLigne.addActionListener(this);
-        this.btnText.addActionListener(this);
-        this.btnUndo.addActionListener(this);
-        this.btnPleinVide.addActionListener(this);
-        */
 
         for (JButton bouton : listeBoutons) {
             bouton.addActionListener(this);

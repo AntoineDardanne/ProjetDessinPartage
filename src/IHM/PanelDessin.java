@@ -169,14 +169,11 @@ public class PanelDessin extends JPanel {
 
 	public void undoDessin() {
 		if (!dessinsClient.isEmpty()) {
+			// On supprime le dernier dessin de l'arrayList	
 			dessinsClient.remove(dessinsClient.size() - 1);
 			this.revalidate();
 			this.repaint();
 			frame.majIHM();
-		}
-		if (!dessinsDuDessins.isEmpty()) {
-			dessinsDuDessins.remove(dessinsDuDessins.size() - 1);
-			this.revalidate();
 			this.repaint();
 			frame.majIHM();
 		}

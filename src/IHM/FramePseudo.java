@@ -58,4 +58,9 @@ public class FramePseudo extends JFrame implements ActionListener
             JOptionPane.showMessageDialog(this, "Veuillez entrer un pseudo valide", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public String getPseudo()
+    {
+        return this.txtPseudo.getText();
+    }
 }

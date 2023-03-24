@@ -1,6 +1,7 @@
 package main;
 
 import IHM.FrameManager;
+import server.*;
 
 public class Controleur
 {
@@ -21,6 +22,6 @@ public class Controleur
 
     public void setIpServeur(String ip)
     {
-        // TODO
+        ServeurDessin serveur = new ServeurDessin(ip);
     }
 }
