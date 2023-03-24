@@ -21,7 +21,6 @@ public class PanelPaletteCouleur extends JPanel
     private JScrollPane scrollPane;
 
     private ArrayList<JButton> listeBoutons;
-    private JButton boutonAjoutCouleur;
 
     private Color couleurSelectionnee;
 
@@ -31,8 +30,6 @@ public class PanelPaletteCouleur extends JPanel
         this.ctrl = ctrl;
 
         this.panel = new JPanel();
-        //this.scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        //this.scrollPane.setPreferredSize(new Dimension(125, 300));
         this.listeBoutons = new ArrayList<JButton>();
 
         // Création des boutons
@@ -42,10 +39,6 @@ public class PanelPaletteCouleur extends JPanel
             this.listeBoutons.add(bouton);
         }
         
-        this.boutonAjoutCouleur = new JButton();
-        this.boutonAjoutCouleur.setPreferredSize(new Dimension(125, 50));
-        this.boutonAjoutCouleur.setText("+");;
-
         // Changement de couleur des boutons
         this.listeBoutons.get(0).setBackground(Color.BLACK);
         this.listeBoutons.get(1).setBackground(Color.RED);
@@ -58,44 +51,25 @@ public class PanelPaletteCouleur extends JPanel
         for (JButton bouton : listeBoutons) {
             this.panel.add(bouton);
         }
-        this.panel.add(this.boutonAjoutCouleur);
 
         // Ajout du panel à la palette
-        //this.add(this.scrollPane);
         this.add(this.panel);
     }
 
-    public void ActionPerformed(ActionEvent e)
+    public void actionPerformed(ActionEvent e)
     {
         if (e.getSource() == listeBoutons.get(0)) {
-            this.couleurSelectionnee = Color.BLACK;
+            frame.setCouleurSelectionnee(Color.BLACK);
         } else if (e.getSource() == listeBoutons.get(1)) {
-            this.couleurSelectionnee = Color.RED;
+            frame.setCouleurSelectionnee(Color.RED);
         } else if (e.getSource() == listeBoutons.get(2)) {
-            this.couleurSelectionnee = Color.BLUE;
+            frame.setCouleurSelectionnee(Color.BLUE);
         } else if (e.getSource() == listeBoutons.get(3)) {
-            this.couleurSelectionnee = Color.GREEN;
+            frame.setCouleurSelectionnee(Color.GREEN);
         } else if (e.getSource() == listeBoutons.get(4)) {
-            this.couleurSelectionnee = Color.YELLOW;
+            frame.setCouleurSelectionnee(Color.YELLOW);
         } else if (e.getSource() == listeBoutons.get(5)) {
-            this.couleurSelectionnee = Color.WHITE;
+            frame.setCouleurSelectionnee(Color.WHITE);
         }
-
-        if (e.getSource() == this.boutonAjoutCouleur) {
-            // On ouvre la fenêtre de choix de couleur
-            Color couleur = JColorChooser.showDialog(this, "Choisissez une couleur", Color.BLACK);
-
-            // On ajoute le bouton à la liste
-            JButton bouton = new JButton();
-            bouton.setPreferredSize(new Dimension(125, 50));
-            bouton.setBackground(couleur);
-            this.listeBoutons.add(bouton);
-            this.panel.add(bouton);
-        }
-    }
-
-    public Color getCouleurSelectionnee()
-    {
-        return this.couleurSelectionnee;
     }
 }

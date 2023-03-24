@@ -61,18 +61,29 @@ public class PanelPaletteForme extends JPanel
     public void ActionPerformed(ActionEvent e)
     {
         if (e.getSource() == listeBoutons.get(0)) {
-            formeSelectionnee = "Carré";
+            frame.setFormeSelectionnee(1);
         } else if (e.getSource() == listeBoutons.get(1)) {
-            formeSelectionnee = "Rond";
+            frame.setFormeSelectionnee(2);
         } else if (e.getSource() == listeBoutons.get(2)) {
-            formeSelectionnee = "Ligne";
+            frame.setFormeSelectionnee(3);
         } else if (e.getSource() == listeBoutons.get(3)) {
-            formeSelectionnee = "Texte";
+            frame.setFormeSelectionnee(4);
         } else if (e.getSource() == listeBoutons.get(4)) {
-            formeSelectionnee = "Undo";
+            frame.setFormeSelectionnee(5);
         } else if (e.getSource() == listeBoutons.get(5)) {
-            formeSelectionnee = "Plein/Vide";
+            frame.setFormePleine();
+            if(frame.getFormePleine() == true) {
+                listeBoutons.get(5).setBackground(Color.GREEN);
+                listeBoutons.get(5).setText("Plein");
+            } else {
+                listeBoutons.get(5).setBackground(null);
+                listeBoutons.get(5).setText("Vide");
+            }
         }
     }
-    
+
+    public int getFormeSelectionnee()
+    {
+        return formeSelectionnee;
+    }
 }
