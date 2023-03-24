@@ -6,9 +6,10 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class PanelPaletteCouleur extends JPanel
+public class PanelPaletteCouleur extends JPanel implements ActionListener
 {
     private final FramePaint frame;
     private ArrayList<JButton> listeBoutons;
@@ -36,6 +37,11 @@ public class PanelPaletteCouleur extends JPanel
         // Ajout des boutons au panel
         for (JButton bouton : listeBoutons) {
             this.add(bouton);
+        }
+
+        // Activation des boutons
+        for (JButton bouton : listeBoutons) {
+            bouton.addActionListener(this);
         }
     }
 

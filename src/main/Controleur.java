@@ -21,6 +21,6 @@ public class Controleur
 
     public void setIpServeur(String ip)
     {
-        
+        // TODO
     }
 }

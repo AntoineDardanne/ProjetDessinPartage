@@ -1,9 +1,12 @@
-package src.metier;
+package metier;
 
 import java.util.ArrayList;
 
+import IHM.PanelDessin;
+
+
 public class StockDessin {
-    private ArrayList<Dessin> dessins;
+    private static ArrayList<Dessin> dessins;
 
     public StockDessin() {
         this.dessins = new ArrayList<Dessin>();
@@ -16,4 +19,8 @@ public class StockDessin {
     public void setDessins(ArrayList<Dessin> dessins) {
         this.dessins = dessins;
     }
+
+    
+
+
 }

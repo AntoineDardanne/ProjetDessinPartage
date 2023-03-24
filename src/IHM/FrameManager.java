@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
-// Frame permettant de choisir entre le mode serveur ou client
+
 public class FrameManager extends JFrame implements ActionListener { 
 	Controleur ctrl;
 	JPanel panelChoixPseudo;
@@ -20,7 +20,7 @@ public class FrameManager extends JFrame implements ActionListener {
 
 	public FrameManager(Controleur ctrl) {
 		this.ctrl = ctrl;
-		this.setTitle("PaintMulti - Choix du mode");
+		this.setTitle("Dessin multi - Choix du mode");
 		this.setResizable(false);
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

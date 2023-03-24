@@ -20,6 +20,7 @@ public class PanelDessin extends JPanel {
 	private boolean formePleine = false;
 	private String texte;
 	ArrayList<Dessin> dessinsClient = new ArrayList<Dessin>();
+	public static ArrayList<Dessin> dessinsDuDessins = new ArrayList<Dessin>();
 
 	public PanelDessin(FramePaint frame)
     {
@@ -28,6 +29,7 @@ public class PanelDessin extends JPanel {
 		
         // ArrayList pour stocker les dessins du client
 		this.dessinsClient = new ArrayList<Dessin>();
+		PanelDessin.dessinsDuDessins = new ArrayList<Dessin>();
 		setBackground(Color.WHITE);
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -109,7 +111,10 @@ public class PanelDessin extends JPanel {
 					y = Math.min(y1, y2);
 					if (dessinTermine) {
 						dessinsClient.add(new Dessin(this.formeSelectionnee, x, y, width, height, couleurSelectionnee, formePleine));
+						dessinsDuDessins.add(new Dessin(this.formeSelectionnee, x, y, width, height, couleurSelectionnee, formePleine));
 						dessinTermine = false;
+
+						
 					}
 					if (formePleine) {
 						g.fillRect(x, y, width, height);
@@ -125,6 +130,7 @@ public class PanelDessin extends JPanel {
 					y = Math.min(y1, y2);
 					if (dessinTermine) {
 						dessinsClient.add(new Dessin(this.formeSelectionnee, x, y, width, height, couleurSelectionnee, formePleine));
+						dessinsDuDessins.add(new Dessin(this.formeSelectionnee, x, y, width, height, couleurSelectionnee, formePleine));
 						dessinTermine = false;
 					}
 					if (formePleine) {
@@ -137,6 +143,7 @@ public class PanelDessin extends JPanel {
 					// Ligne
 					if (dessinTermine) {
 						dessinsClient.add(new Dessin(this.formeSelectionnee, x1, y1, x2, y2, couleurSelectionnee, false));
+						dessinsDuDessins.add(new Dessin(this.formeSelectionnee, x1, y1, x2, y2, couleurSelectionnee, false));
 						dessinTermine = false;
 					}
 					g.drawLine(x1, y1, x2, y2);
@@ -146,6 +153,7 @@ public class PanelDessin extends JPanel {
 					g.drawString(texte, x1, y1);
 					if (dessinTermine) {
 						dessinsClient.add(new Dessin(this.formeSelectionnee, x1, y1, 0, 0, couleurSelectionnee, false, texte));
+						dessinsDuDessins.add(new Dessin(this.formeSelectionnee, x1, y1, 0, 0, couleurSelectionnee, false, texte));
 						dessinTermine = false;
 					}
 					break;
@@ -166,6 +174,12 @@ public class PanelDessin extends JPanel {
 			this.repaint();
 			frame.majIHM();
 		}
+		if (!dessinsDuDessins.isEmpty()) {
+			dessinsDuDessins.remove(dessinsDuDessins.size() - 1);
+			this.revalidate();
+			this.repaint();
+			frame.majIHM();
+		}
 	}
 
 	public void setFormePleine() { this.formePleine = !formePleine; }
@@ -173,5 +187,8 @@ public class PanelDessin extends JPanel {
 	public boolean estPleine() { return formePleine; }
 
 	public void setCouleurSelectionnee(Color couleurSelectionnee) { this.couleurSelectionnee = couleurSelectionnee; }
+
+
+	
 
 }
