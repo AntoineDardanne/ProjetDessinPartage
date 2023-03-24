@@ -1,6 +1,6 @@
-package src.IHM;
+package IHM;
 
-import src.Controleur;
+import main.Controleur;
 
 import javax.swing.*;
 import java.awt.*;

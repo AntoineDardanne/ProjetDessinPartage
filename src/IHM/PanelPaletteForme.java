@@ -3,27 +3,20 @@ package IHM;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import main.Controleur;
-
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class PanelPaletteForme extends JPanel
 {
-    private Controleur ctrl;
-
-    private JPanel panel;
+    private final FramePaint frame;
     private ArrayList<JButton> listeBoutons;
     private String formeSelectionnee;
 
-    public PanelPaletteForme(Controleur ctrl) 
+    public PanelPaletteForme(FramePaint frame) 
     {
-        this.ctrl = ctrl;
-
-        this.panel = new JPanel();
+        this.frame = frame;
 
         listeBoutons = new ArrayList<JButton>();
 
@@ -37,7 +30,7 @@ public class PanelPaletteForme extends JPanel
 
         // Ajout des boutons au panel
         for (JButton bouton : listeBoutons) {
-            this.panel.add(bouton);
+            this.add(bouton);
         }
 
         // Ajout des noms aux boutons
@@ -47,9 +40,6 @@ public class PanelPaletteForme extends JPanel
         listeBoutons.get(3).setText("Texte");
         listeBoutons.get(4).setText("Undo");
         listeBoutons.get(5).setText("Plein/Vide");
-
-        // Ajout du panel à la palette
-        this.add(this.panel);
 
     }
 
@@ -72,7 +62,7 @@ public class PanelPaletteForme extends JPanel
             frame.setFormeSelectionnee(5);
         } else if (e.getSource() == listeBoutons.get(5)) {
             frame.setFormePleine();
-            if(frame.getFormePleine() == true) {
+            if(frame.estPleine() == true) {
                 listeBoutons.get(5).setBackground(Color.GREEN);
                 listeBoutons.get(5).setText("Plein");
             } else {
@@ -80,10 +70,5 @@ public class PanelPaletteForme extends JPanel
                 listeBoutons.get(5).setText("Vide");
             }
         }
-    }
-
-    public int getFormeSelectionnee()
-    {
-        return formeSelectionnee;
     }
 }

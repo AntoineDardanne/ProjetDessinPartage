@@ -1,4 +1,17 @@
-package src.IHM;
+package IHM;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import main.Controleur;
 
 public class FramePseudo extends JFrame implements ActionListener
 {

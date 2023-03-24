@@ -1,11 +1,7 @@
 package IHM;
 
-import main.Controleur;
-
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,22 +10,12 @@ import java.util.ArrayList;
 
 public class PanelPaletteCouleur extends JPanel
 {
-    private Controleur ctrl;
-
-    private JPanel panel;
-
-    private JScrollPane scrollPane;
-
+    private final FramePaint frame;
     private ArrayList<JButton> listeBoutons;
 
-    private Color couleurSelectionnee;
-
-    public PanelPaletteCouleur(Controleur ctrl)
+    public PanelPaletteCouleur(FramePaint frame)
     {
-
-        this.ctrl = ctrl;
-
-        this.panel = new JPanel();
+        this.frame = frame;
         this.listeBoutons = new ArrayList<JButton>();
 
         // Création des boutons
@@ -49,11 +35,8 @@ public class PanelPaletteCouleur extends JPanel
 
         // Ajout des boutons au panel
         for (JButton bouton : listeBoutons) {
-            this.panel.add(bouton);
+            this.add(bouton);
         }
-
-        // Ajout du panel à la palette
-        this.add(this.panel);
     }
 
     public void actionPerformed(ActionEvent e)

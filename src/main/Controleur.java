@@ -1,7 +1,6 @@
 package main;
 
-import IHM.Frame;
-import metier.Metier;
+import IHM.FrameManager;
 
 public class Controleur
 {

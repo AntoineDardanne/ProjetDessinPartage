@@ -1,4 +1,6 @@
-package src.metier;
+package metier;
+
+import java.awt.Color;
 
 public class Dessin
 {
@@ -36,6 +38,6 @@ public class Dessin
     public int getLargeur()     { return largeur; }
     public int getHauteur()     { return hauteur; }
     public Color getCouleur()   { return couleur; }
-    public boolean isPlein()    { return plein; }
+    public boolean estPleine()    { return plein; }
     public String getTexte()    { return texte; }
 }

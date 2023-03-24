@@ -1,13 +1,14 @@
-package src.IHM;
+package IHM;
 
-import src.Metier.Dessin;
+import metier.Dessin;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 
 public class PanelDessin extends JPanel {
 
@@ -33,7 +34,7 @@ public class PanelDessin extends JPanel {
 				x1 = x2 = e.getX();
 				y1 = y2 = e.getY();
 
-				if (getSelectionForme() == 4) {
+				if (getFormeSelectionnee() == 4) {
 					texte = JOptionPane.showInputDialog("Entrez le texte à écrire");
 					dessinTermine = true;
 					if (texte == null) {
@@ -67,27 +68,27 @@ public class PanelDessin extends JPanel {
 			// On redessine les dessins du client en fonction de le l'arrayList
 			if (!this.dessinsClient.isEmpty()) {
 				for (Dessin dessin : dessinsClient) {
-					g.setColor(dessin.getColor());
+					g.setColor(dessin.getCouleur());
 					switch (dessin.getType()) {
 						case 1:
 							// Carré
-							if (dessin.isFilled()) {
-								g.fillRect(dessin.getX(), dessin.getY(), dessin.getWidth(), dessin.getHeight());
+							if (dessin.estPleine()) {
+								g.fillRect(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
 							} else {
-								g.drawRect(dessin.getX(), dessin.getY(), dessin.getWidth(), dessin.getHeight());
+								g.drawRect(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
 							}
 							break;
 						case 2:
 							// Rond
-							if (dessin.isFilled()) {
-								g.fillOval(dessin.getX(), dessin.getY(), dessin.getWidth(), dessin.getHeight());
+							if (dessin.estPleine()) {
+								g.fillOval(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
 							} else {
-								g.drawOval(dessin.getX(), dessin.getY(), dessin.getWidth(), dessin.getHeight());
+								g.drawOval(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
 							}
 							break;
 						case 3:
 							// Ligne
-							g.drawLine(dessin.getX(), dessin.getY(), dessin.getWidth(), dessin.getHeight());
+							g.drawLine(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
 							break;
 						case 4:
 							// Texte
@@ -97,9 +98,9 @@ public class PanelDessin extends JPanel {
 				}
 			}
 			// On dessine le dessin en cours après avoir redessiné les dessins du client
-			g.setColor(couleurActu);
+			g.setColor(couleurSelectionnee);
 			int width, height, x, y;
-			switch (this.selectionForme) {
+			switch (this.formeSelectionnee) {
 				case 1:
 					// Carré
 					width = Math.abs(x2 - x1);
@@ -107,10 +108,10 @@ public class PanelDessin extends JPanel {
 					x = Math.min(x1, x2);
 					y = Math.min(y1, y2);
 					if (dessinTermine) {
-						dessinsClient.add(new Dessin(this.selectionForme, x, y, width, height, couleurActu, plein));
+						dessinsClient.add(new Dessin(this.formeSelectionnee, x, y, width, height, couleurSelectionnee, formePleine));
 						dessinTermine = false;
 					}
-					if (plein) {
+					if (formePleine) {
 						g.fillRect(x, y, width, height);
 					} else {
 						g.drawRect(x, y, width, height);
@@ -123,10 +124,10 @@ public class PanelDessin extends JPanel {
 					x = Math.min(x1, x2);
 					y = Math.min(y1, y2);
 					if (dessinTermine) {
-						dessinsClient.add(new Dessin(this.selectionForme, x, y, width, height, couleurActu, plein));
+						dessinsClient.add(new Dessin(this.formeSelectionnee, x, y, width, height, couleurSelectionnee, formePleine));
 						dessinTermine = false;
 					}
-					if (plein) {
+					if (formePleine) {
 						g.fillOval(x, y, width, height);
 					} else {
 						g.drawOval(x, y, width, height);
@@ -135,7 +136,7 @@ public class PanelDessin extends JPanel {
 				case 3:
 					// Ligne
 					if (dessinTermine) {
-						dessinsClient.add(new Dessin(this.selectionForme, x1, y1, x2, y2, couleurActu, false));
+						dessinsClient.add(new Dessin(this.formeSelectionnee, x1, y1, x2, y2, couleurSelectionnee, false));
 						dessinTermine = false;
 					}
 					g.drawLine(x1, y1, x2, y2);
@@ -144,7 +145,7 @@ public class PanelDessin extends JPanel {
 					// Texte
 					g.drawString(texte, x1, y1);
 					if (dessinTermine) {
-						dessinsClient.add(new Dessin(this.selectionForme, x1, y1, 0, 0, couleurActu, false, texte));
+						dessinsClient.add(new Dessin(this.formeSelectionnee, x1, y1, 0, 0, couleurSelectionnee, false, texte));
 						dessinTermine = false;
 					}
 					break;
@@ -152,7 +153,7 @@ public class PanelDessin extends JPanel {
 		}
 	}
 
-	public void setFormeSelectionnee(int selectionForme) { this.formeSelectionnee = formeSelectionnee; }
+	public void setFormeSelectionnee(int formeSelectionnee) { this.formeSelectionnee = formeSelectionnee;}
 
 	public int getFormeSelectionnee() { return this.formeSelectionnee; }
 
@@ -169,6 +170,8 @@ public class PanelDessin extends JPanel {
 
 	public void setFormePleine() { this.formePleine = !formePleine; }
 
-	public boolean getFormePleine() { return formePleine; }
+	public boolean estPleine() { return formePleine; }
+
+	public void setCouleurSelectionnee(Color couleurSelectionnee) { this.couleurSelectionnee = couleurSelectionnee; }
 
 }

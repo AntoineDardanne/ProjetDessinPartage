@@ -1,6 +1,6 @@
-package src.IHM;
+package IHM;
 
-import src.Controleur;
+import main.Controleur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +8,9 @@ import java.awt.*;
 public class FramePaint extends JFrame {
 
 	Controleur ctrl;
-	panelPaletteForme panelFormes;
-    panelPaletteCouleur panelCouleur;
+	PanelPaletteForme panelFormes;
+    PanelPaletteCouleur panelCouleur;
+	PanelDessin panelDessin;
 
 
 	public FramePaint(Controleur ctrl, String titre, boolean estServeur) {
@@ -39,9 +40,9 @@ public class FramePaint extends JFrame {
 			while(!ctrl.connecterServeur());
 		}
 
-		this.panelFormes = new PanelFormes(this);
+		this.panelFormes = new PanelPaletteForme(this);
 		this.panelDessin = new PanelDessin(this);
-		this.panelCouleur = new PanelCouleur(this);
+		this.panelCouleur = new PanelPaletteCouleur(this);
 
 
 		this.add(panelFormes, BorderLayout.NORTH);
@@ -65,9 +66,9 @@ public class FramePaint extends JFrame {
 		this.panelDessin.setFormePleine();
 	}
 
-	public boolean estPlein()
+	public boolean estPleine()
 	{
-		return this.panelDessin.estPlein();
+		return this.panelDessin.estPleine();
 	}
 
 	public void majIHM()
