@@ -20,8 +20,5 @@ public class Controleur
         return false;
     }
 
-    public void setIpServeur(String ip)
-    {
-        ServeurDessin serveur = new ServeurDessin(ip);
-    }
+    
 }

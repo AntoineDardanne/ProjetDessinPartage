@@ -60,6 +60,7 @@ public class FrameManager extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnServeur) {
 			this.dispose();
+			
 			new FramePseudo(ctrl, true); // true pour le mode serveur
 		} else if (e.getSource() == this.btnClient) {
 			this.dispose();

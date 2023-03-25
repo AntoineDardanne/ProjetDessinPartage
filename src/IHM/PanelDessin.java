@@ -1,6 +1,7 @@
 package IHM;
 
 import metier.Dessin;
+import server.ServeurDessin;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -22,14 +23,14 @@ public class PanelDessin extends JPanel {
 	ArrayList<Dessin> dessinsClient = new ArrayList<Dessin>();
 	public static ArrayList<Dessin> dessinsDuDessins = new ArrayList<Dessin>();
 
-	public PanelDessin(FramePaint frame)
+	public PanelDessin(FramePaint frame,ArrayList<Dessin> dessinsDuDessins)
     {
 		this.frame = frame;
 		this.setBackground(Color.WHITE);
 		
         // ArrayList pour stocker les dessins du client
 		this.dessinsClient = new ArrayList<Dessin>();
-		PanelDessin.dessinsDuDessins = new ArrayList<Dessin>();
+		PanelDessin.dessinsDuDessins = dessinsDuDessins;
 		setBackground(Color.WHITE);
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -66,6 +67,40 @@ public class PanelDessin extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
+		if(!this.dessinsDuDessins.isEmpty())
+		{
+			for (Dessin dessin : dessinsDuDessins) 
+			{
+				g.setColor(dessin.getCouleur());
+					switch (dessin.getType()) {
+						case 1:
+							// Carré
+							if (dessin.estPleine()) {
+								g.fillRect(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
+							} else {
+								g.drawRect(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
+							}
+							break;
+						case 2:
+							// Rond
+							if (dessin.estPleine()) {
+								g.fillOval(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
+							} else {
+								g.drawOval(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
+							}
+							break;
+						case 3:
+							// Ligne
+							g.drawLine(dessin.getX(), dessin.getY(), dessin.getLargeur(), dessin.getHauteur());
+							break;
+						case 4:
+							// Texte
+							g.drawString(dessin.getTexte(), dessin.getX(), dessin.getY());
+							break;
+					}
+			}
+		}
+
 		if (x1 != 0 && x2 != 0 && y1 != 0 && y2 != 0) {
 			// On redessine les dessins du client en fonction de le l'arrayList
 			if (!this.dessinsClient.isEmpty()) {
@@ -99,6 +134,11 @@ public class PanelDessin extends JPanel {
 					}
 				}
 			}
+
+			this.revalidate();
+			this.repaint();
+			frame.majIHM();
+
 			// On dessine le dessin en cours après avoir redessiné les dessins du client
 			g.setColor(couleurSelectionnee);
 			int width, height, x, y;
@@ -171,6 +211,8 @@ public class PanelDessin extends JPanel {
 		if (!dessinsClient.isEmpty()) {
 			// On supprime le dernier dessin de l'arrayList	
 			dessinsClient.remove(dessinsClient.size() - 1);
+			
+			
 			this.revalidate();
 			this.repaint();
 			frame.majIHM();

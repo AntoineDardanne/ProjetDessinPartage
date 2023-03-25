@@ -1,9 +1,12 @@
 package IHM;
 
 import main.Controleur;
+import metier.Dessin;
+import server.ClientDessin;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class FramePaint extends JFrame {
 
@@ -11,6 +14,7 @@ public class FramePaint extends JFrame {
 	PanelPaletteForme panelFormes;
     PanelPaletteCouleur panelCouleur;
 	PanelDessin panelDessin;
+	ArrayList<Dessin> dessinsDuDessins;
 
 
 	public FramePaint(Controleur ctrl, String titre, boolean estServeur) {
@@ -22,26 +26,35 @@ public class FramePaint extends JFrame {
 		this.setResizable(false);
 		this.setLayout(new BorderLayout());
 
+		this.dessinsDuDessins = PanelDessin.dessinsDuDessins;
+
 		//acceuil avec popup pour choisir le serveur si on est client
 		if(!estServeur)
 		{
 			do
 			{
 				String ip = JOptionPane.showInputDialog("Entrez l'adresse IP du serveur");
+ 
 				if(ip == null)
 				{
 					System.exit(0);
 				}
 				else
 				{
-					ctrl.setIpServeur(ip);
+					if(ClientDessin.getIp() == ip)
+					{
+						 break;
+					}
+					break;
 				}
+				
+
 			}
 			while(!ctrl.connecterServeur());
 		}
 
 		this.panelFormes = new PanelPaletteForme(this);
-		this.panelDessin = new PanelDessin(this);
+		this.panelDessin = new PanelDessin(this,dessinsDuDessins);
 		this.panelCouleur = new PanelPaletteCouleur(this);
 
 
