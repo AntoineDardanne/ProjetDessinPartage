@@ -1,15 +1,19 @@
 package IHM;
 
 import main.Controleur;
+import server.ClientDessin;
+import server.ServeurDessin;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
-
-public class FrameManager extends JFrame implements ActionListener { 
+// Frame permettant de choisir entre le mode serveur ou client
+public class FrameManager extends JFrame implements ActionListener {
 	Controleur ctrl;
 	JPanel panelChoixPseudo;
 	JTextField txtPseudo;
@@ -20,7 +24,7 @@ public class FrameManager extends JFrame implements ActionListener {
 
 	public FrameManager(Controleur ctrl) {
 		this.ctrl = ctrl;
-		this.setTitle("Dessin multi - Choix du mode");
+		this.setTitle("PaintMulti - Choix du mode");
 		this.setResizable(false);
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -60,13 +64,46 @@ public class FrameManager extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnServeur) {
 			this.dispose();
-			
-			new FramePseudo(ctrl, true); // true pour le mode serveur
+			String pseudo = recupPseudo();
+			ctrl.setEstServeur(true);
+
+			// Création du serveur sur un nouveau thread
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						new ServeurDessin(ctrl);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}).start();
+
+			this.ctrl.setFramePaint(new FramePaint(ctrl, pseudo, true));
+
+			// TODO Auto-generated catch block
 		} else if (e.getSource() == this.btnClient) {
 			this.dispose();
-			new FramePseudo(ctrl, false); // false pour le mode client
+			ctrl.setEstServeur(false);
+			ClientDessin c = new ClientDessin(ctrl);
+			ctrl.setClient(c);
+			if (c.connecter()) { // Si la connexion a réussi on ouvre la FramePaint
+				this.ctrl.setFramePaint(new FramePaint(ctrl, recupPseudo(), false));
+			}
 		}
 	}
 
-	
+
+	public String recupPseudo() {
+		do
+		{
+			String pseudo = JOptionPane.showInputDialog(null, "Entrez votre pseudo", "Pseudo", JOptionPane.QUESTION_MESSAGE);
+			if (pseudo != null ) {
+				if (!pseudo.equals("")) {
+					return pseudo;
+				}
+				JOptionPane.showMessageDialog(null, "Le pseudo ne peut pas être vide", "Erreur", JOptionPane.ERROR_MESSAGE);
+			}
+		} while (true);
+	}
 }

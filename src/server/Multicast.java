@@ -133,8 +133,8 @@ public class Multicast {
 	public static void main(String[] arg) throws Exception {
 		//ArrayList<Dessin> en dur pour tester
 		ArrayList<Dessin> dessins = new ArrayList<Dessin>();
-		dessins.add(new Dessin(Dessin.RECTANGLE, 10, 10, 10, 10, Color.BLACK, false, ""));
-		dessins.add(new Dessin(Dessin.OVALE, 50, 50, 10, 10, Color.RED, true, ""));
+		dessins.add(new Dessin(Dessin.CARRE, 10, 10, 10, 10, Color.BLACK, false, ""));
+		dessins.add(new Dessin(Dessin.ROND, 50, 50, 10, 10, Color.RED, true, ""));
 		dessins.add(new Dessin(Dessin.LIGNE, 100, 100, 10, 10, Color.BLUE, false, ""));
 		dessins.add(new Dessin(Dessin.TEXTE, 150, 150, 10, 10, Color.GREEN, false, "Bonjour"));
 		new Multicast("239.255.100.45", 1234, "Client 1", dessins);

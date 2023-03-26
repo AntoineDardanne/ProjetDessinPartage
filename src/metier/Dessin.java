@@ -4,8 +4,8 @@ import java.awt.Color;
 
 public class Dessin implements java.io.Serializable
 {
-    public static final int RECTANGLE = 1;
-    public static final int OVALE = 2;
+    public static final int CARRE = 1;
+    public static final int ROND = 2;
     public static final int LIGNE = 3;
     public static final int TEXTE = 4;
 
@@ -26,7 +26,7 @@ public class Dessin implements java.io.Serializable
         this.texte = texte;
     }
 
-    public Dessin(int type, int x, int y, int largeur, int hauteur, Color couleur, boolean plein)
+    /*public Dessin(int type, int x, int y, int largeur, int hauteur, Color couleur, boolean plein)
     {
         this.type = type;
         this.x = x;
@@ -35,7 +35,7 @@ public class Dessin implements java.io.Serializable
         this.hauteur = hauteur;
         this.couleur = couleur;
         this.plein = plein;
-    }
+    }*/
 
     public int getType()        { return type; }
     public int getX()           { return x; }

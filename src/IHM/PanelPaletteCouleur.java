@@ -45,19 +45,60 @@ public class PanelPaletteCouleur extends JPanel implements ActionListener
         }
     }
 
-    public void actionPerformed(ActionEvent e)
-    {
-        if (e.getSource() == listeBoutons.get(0)) {
-            frame.setCouleurSelectionnee(Color.BLACK);
-        } else if (e.getSource() == listeBoutons.get(1)) {
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.listeBoutons.get(0)) {
+            this.listeBoutons.get(0).setEnabled(false);
+
+            this.listeBoutons.get(1).setEnabled(true);
+            this.listeBoutons.get(2).setEnabled(true);
+            this.listeBoutons.get(3).setEnabled(true);
+            this.listeBoutons.get(4).setEnabled(true);
+            this.listeBoutons.get(5).setEnabled(true);
             frame.setCouleurSelectionnee(Color.RED);
-        } else if (e.getSource() == listeBoutons.get(2)) {
+        } else if (e.getSource() == this.listeBoutons.get(1)) {
+            this.listeBoutons.get(0).setEnabled(true);
+
+            this.listeBoutons.get(1).setEnabled(false);
+            this.listeBoutons.get(2).setEnabled(true);
+            this.listeBoutons.get(3).setEnabled(true);
+            this.listeBoutons.get(4).setEnabled(true);
+            this.listeBoutons.get(5).setEnabled(true);
+            frame.setCouleurSelectionnee(Color.RED);
+        } else if (e.getSource() == this.listeBoutons.get(2)) {
+            this.listeBoutons.get(0).setEnabled(true);
+
+            this.listeBoutons.get(1).setEnabled(true);
+            this.listeBoutons.get(2).setEnabled(false);
+            this.listeBoutons.get(3).setEnabled(true);
+            this.listeBoutons.get(4).setEnabled(true);
+            this.listeBoutons.get(5).setEnabled(true);
             frame.setCouleurSelectionnee(Color.BLUE);
-        } else if (e.getSource() == listeBoutons.get(3)) {
+        } else if (e.getSource() == this.listeBoutons.get(3)) {
+            this.listeBoutons.get(0).setEnabled(true);
+
+            this.listeBoutons.get(1).setEnabled(true);
+            this.listeBoutons.get(2).setEnabled(true);
+            this.listeBoutons.get(3).setEnabled(false);
+            this.listeBoutons.get(4).setEnabled(true);
+            this.listeBoutons.get(5).setEnabled(true);
             frame.setCouleurSelectionnee(Color.GREEN);
-        } else if (e.getSource() == listeBoutons.get(4)) {
+        } else if (e.getSource() == this.listeBoutons.get(4)) {
+            this.listeBoutons.get(0).setEnabled(true);
+
+            this.listeBoutons.get(1).setEnabled(true);
+            this.listeBoutons.get(2).setEnabled(true);
+            this.listeBoutons.get(3).setEnabled(true);
+            this.listeBoutons.get(4).setEnabled(false);
+            this.listeBoutons.get(5).setEnabled(true);
             frame.setCouleurSelectionnee(Color.YELLOW);
-        } else if (e.getSource() == listeBoutons.get(5)) {
+        } else if (e.getSource() == this.listeBoutons.get(5)) {
+            this.listeBoutons.get(0).setEnabled(true);
+
+            this.listeBoutons.get(1).setEnabled(true);
+            this.listeBoutons.get(2).setEnabled(true);
+            this.listeBoutons.get(3).setEnabled(true);
+            this.listeBoutons.get(4).setEnabled(true);
+            this.listeBoutons.get(5).setEnabled(false);
             frame.setCouleurSelectionnee(Color.WHITE);
         }
     }

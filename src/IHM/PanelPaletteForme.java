@@ -44,37 +44,63 @@ public class PanelPaletteForme extends JPanel implements ActionListener {
     {
         if(e.getSource() == this.listeBoutons.get(0))
         {
-            frame.setFormeSelectionnee(1);
+            this.listeBoutons.get(0).setEnabled(false);
+            this.listeBoutons.get(1).setEnabled(true);
+            this.listeBoutons.get(2).setEnabled(true);
+            this.listeBoutons.get(3).setEnabled(true);
+            this.listeBoutons.get(4).setEnabled(true);
+            this.listeBoutons.get(5).setEnabled(true);
+            this.selectionForme = 1;
         }
+        else if(e.getSource() == this.listeBoutons.get(1))
         {
-            frame.setFormeSelectionnee(1);
+            this.listeBoutons.get(0).setEnabled(true);
+            this.listeBoutons.get(1).setEnabled(false);
+            this.listeBoutons.get(2).setEnabled(true);
+            this.listeBoutons.get(3).setEnabled(true);
+            this.listeBoutons.get(4).setEnabled(true);
+            this.listeBoutons.get(5).setEnabled(true);
+            this.selectionForme = 2;
         }
-        if (e.getSource() == this.listeBoutons.get(1))
+        else if(e.getSource() == this.listeBoutons.get(2))
         {
-            frame.setFormeSelectionnee(2);
+            this.listeBoutons.get(0).setEnabled(true);
+            this.listeBoutons.get(1).setEnabled(true);
+            this.listeBoutons.get(2).setEnabled(false);
+            this.listeBoutons.get(3).setEnabled(true);
+            this.listeBoutons.get(4).setEnabled(true);
+            this.listeBoutons.get(5).setEnabled(true);
+            this.selectionForme = 3;
         }
-        if (e.getSource() == this.listeBoutons.get(2))
+        else if(e.getSource() == this.listeBoutons.get(3))
         {
-            frame.setFormeSelectionnee(3);
+            this.listeBoutons.get(0).setEnabled(true);
+            this.listeBoutons.get(1).setEnabled(true);
+            this.listeBoutons.get(2).setEnabled(true);
+            this.listeBoutons.get(3).setEnabled(false);
+            this.listeBoutons.get(4).setEnabled(true);
+            this.listeBoutons.get(5).setEnabled(true);
+            this.selectionForme = 4;
         }
-        if (e.getSource() == this.listeBoutons.get(3))
+        else if(e.getSource() == this.listeBoutons.get(4))
         {
-            frame.setFormeSelectionnee(4);
+            this.listeBoutons.get(0).setEnabled(true);
+            this.listeBoutons.get(1).setEnabled(true);
+            this.listeBoutons.get(2).setEnabled(true);
+            this.listeBoutons.get(3).setEnabled(true);
+            this.listeBoutons.get(4).setEnabled(false);
+            this.listeBoutons.get(5).setEnabled(true);
+            this.selectionForme = 5;
         }
-        if (e.getSource() == this.listeBoutons.get(4))
-        {
-            frame.undoDessin();
-        }
-        if (e.getSource() == this.listeBoutons.get(5)) {
+        else if(e.getSource() == this.listeBoutons.get(5)) {
             frame.setFormePleine();
-            if (frame.estPleine() == true) {
-                this.listeBoutons.get(5).setBackground(Color.GREEN);
+            if (frame.estPleine()) {
                 this.listeBoutons.get(5).setText("Plein");
+                this.listeBoutons.get(5).setBackground(Color.GREEN);
             } else {
-                this.listeBoutons.get(5).setBackground(null);
                 this.listeBoutons.get(5).setText("Vide");
+                this.listeBoutons.get(5).setBackground(Color.WHITE);
             }
-
         }
     }
 

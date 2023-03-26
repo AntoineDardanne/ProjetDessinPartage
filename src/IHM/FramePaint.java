@@ -14,29 +14,23 @@ public class FramePaint extends JFrame {
 	PanelPaletteForme panelFormes;
     PanelPaletteCouleur panelCouleur;
 	PanelDessin panelDessin;
-	ArrayList<Dessin> dessinsDuDessins;
 
-
-	public FramePaint(Controleur ctrl, String titre, boolean estServeur) {
+	public FramePaint(Controleur ctrl, String pseudo, boolean estServeur) {
 		this.ctrl = ctrl;
-		this.setTitle("PaintMulti - " + titre + " - " + (estServeur ? "Serveur" : "Client"));
+		this.setTitle("PaintMulti - " + pseudo + " - " + (estServeur ? "Serveur" : "Client"));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(800, 600);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setLayout(new BorderLayout());
 
-		this.dessinsDuDessins = PanelDessin.dessinsDuDessins;
-
 		this.panelFormes = new PanelPaletteForme(this);
-		this.panelDessin = new PanelDessin(this,dessinsDuDessins);
 		this.panelCouleur = new PanelPaletteCouleur(this);
 
 
 		this.add(panelFormes, BorderLayout.NORTH);
 		this.add(panelDessin, BorderLayout.CENTER);
 		this.add(panelCouleur, BorderLayout.SOUTH);
-
 
 		this.setVisible(true);
 	}

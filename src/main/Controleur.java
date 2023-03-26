@@ -6,6 +6,7 @@ import metier.Dessin;
 import server.ServeurDessin;
 import server.ClientDessin;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Controleur
@@ -62,6 +63,10 @@ public class Controleur
             client.envoyerNouveauDessin(dessin.toSend());
         }
 
+    }
+
+    public Window getFrameManager() {
+        return frameManager;
     }
 
     public void setFrameManager(FrameManager frameManager) {
