@@ -85,13 +85,6 @@ class Emetteur extends Thread {
 public void run() {
 	try {
 		while (true) {
-			/*sleep(1000);
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(baos);
-			oos.writeObject(dessins);
-			oos.flush();
-			byte[] data = baos.toByteArray();
-			DatagramPacket message = new DatagramPacket(data, data.length, groupeIP, port);*/
 
 			// Envoie le nom + l'arraylist de dessins
 			sleep (1000);

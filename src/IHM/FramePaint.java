@@ -28,31 +28,6 @@ public class FramePaint extends JFrame {
 
 		this.dessinsDuDessins = PanelDessin.dessinsDuDessins;
 
-		//acceuil avec popup pour choisir le serveur si on est client
-		if(!estServeur)
-		{
-			do
-			{
-				String ip = JOptionPane.showInputDialog("Entrez l'adresse IP du serveur");
- 
-				if(ip == null)
-				{
-					System.exit(0);
-				}
-				else
-				{
-					if(ClientDessin.getIp() == ip)
-					{
-						 break;
-					}
-					break;
-				}
-				
-
-			}
-			while(!ctrl.connecterServeur());
-		}
-
 		this.panelFormes = new PanelPaletteForme(this);
 		this.panelDessin = new PanelDessin(this,dessinsDuDessins);
 		this.panelCouleur = new PanelPaletteCouleur(this);
@@ -90,4 +65,12 @@ public class FramePaint extends JFrame {
 		this.repaint();
 	}
 
+	public void ajouterDessin(Dessin dessin)
+	{
+		this.panelDessin.ajouterDessin(dessin);
+	}
+
+	public PanelDessin getPanelDessin() {
+		return panelDessin;
+	}
 }

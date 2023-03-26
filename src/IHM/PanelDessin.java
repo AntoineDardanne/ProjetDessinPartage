@@ -227,7 +227,14 @@ public class PanelDessin extends JPanel {
 
 	public void setCouleurSelectionnee(Color couleurSelectionnee) { this.couleurSelectionnee = couleurSelectionnee; }
 
+	public void ajouterDessin(Dessin dessin)
+	{
+		this.dessinsClient.add(dessin);
+		this.revalidate();
+		this.repaint();
+	}
 
+	public ArrayList<Dessin> getDessinsClient() { return dessinsClient; }
 	
 
 }

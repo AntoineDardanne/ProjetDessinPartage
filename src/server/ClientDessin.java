@@ -37,7 +37,7 @@ public class ClientDessin {
 					envoiDessinIHM(dessin);
 				}
 			} catch (SocketException e) {
-				//if(!controleur.getEstServeur()) // Empèche le message d'erreur si on est serveur
+				if(!controleur.getEstServeur()) // Empèche le message d'erreur si on est serveur
 				{
 					// Popup d'erreur si le serveur s'est déconnecté
 					JOptionPane.showMessageDialog(null, "Le serveur s'est déconnecté", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -45,7 +45,6 @@ public class ClientDessin {
 					controleur.getFramePaint().dispose();
 					controleur.setFrameManager(new FrameManager(controleur));
 				}
-				// Le if ne devrait pas etre necessaire mais c'est tellement du bidouillage, faudrait reprendre propre mais plus le temps
 			} catch (
 					Exception e) {
 				e.printStackTrace();
@@ -60,7 +59,7 @@ public class ClientDessin {
 		try {
 			// Créer un socket pour se connecter au serveur
 			this.socket = new Socket("localhost", 12345); // même machine
-			//this.socket = new Socket("...", 12345); // autre machine
+			this.socket = new Socket("...", 12345); // autre machine
 
 
 			new ClientDessin(ctrl, socket);
