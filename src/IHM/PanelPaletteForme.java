@@ -4,108 +4,128 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
+/**
+ * Panel de la palette de formes
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
 public class PanelPaletteForme extends JPanel implements ActionListener {
 
     private final FramePaint frame;
-    ArrayList<JButton> listeBoutons;
-    int selectionForme;
+    JButton btnCarre, btnRond, btnLigne, btnText, btnUndo, btnPleinVide;
+    int formeSelectionnee;
 
+    /**
+     * Constructeur de la classe PanelPaletteForme
+     * @param frame
+     */
     public PanelPaletteForme(FramePaint frame) {
         this.frame = frame;
         this.setLayout(new GridLayout(1, 4, 5, 5));
 
-        this.listeBoutons = new ArrayList<JButton>();
-        for (int i = 0; i < 6; i++) {
-            JButton bouton = new JButton();
-            bouton.setPreferredSize(new Dimension(125, 50));
-            bouton.setBackground(Color.WHITE);
-            this.listeBoutons.add(bouton);
-        }
+        this.btnCarre = new JButton("Carre");
+        this.btnRond  = new JButton("Rond");
+        this.btnLigne = new JButton("Ligne");
+        this.btnText =  new JButton("Texte");
+        this.btnUndo = new JButton("Undo");
+        this.btnPleinVide = new JButton("Vide");
 
-        this.listeBoutons.get(0).setText("Carre");
-        this.listeBoutons.get(1).setText("Rond");
-        this.listeBoutons.get(2).setText("Ligne");
-        this.listeBoutons.get(3).setText("Texte");
-        this.listeBoutons.get(4).setText("Undo");
-        this.listeBoutons.get(5).setText("Vide");
+        this.btnCarre.setBackground(java.awt.Color.WHITE);
+        this.btnRond.setBackground(java.awt.Color.WHITE);
+        this.btnLigne.setBackground(java.awt.Color.WHITE);
+        this.btnText.setBackground(java.awt.Color.WHITE);
+        this.btnUndo.setBackground(java.awt.Color.WHITE);
+        this.btnPleinVide.setBackground(Color.RED);
 
-        for (JButton bouton : listeBoutons) {
-            this.add(bouton);
-        }
+        this.add(btnCarre);
+        this.add(btnRond);
+        this.add(btnLigne);
+        this.add(btnText);
+        this.add(btnUndo);
+        this.add(btnPleinVide);
 
-        for (JButton bouton : listeBoutons) {
-            bouton.addActionListener(this);
-        }
+        this.btnCarre.addActionListener(this);
+        this.btnRond.addActionListener(this);
+        this.btnLigne.addActionListener(this);
+        this.btnText.addActionListener(this);
+        this.btnUndo.addActionListener(this);
+        this.btnPleinVide.addActionListener(this);
+
     }
 
+    /**
+     * Methode qui permet de recuperer la forme selectionnee
+     * @return
+     */
     public void actionPerformed(ActionEvent e)
     {
-        if(e.getSource() == this.listeBoutons.get(0))
+        if(e.getSource() == this.btnCarre)
         {
-            this.listeBoutons.get(0).setEnabled(false);
-            this.listeBoutons.get(1).setEnabled(true);
-            this.listeBoutons.get(2).setEnabled(true);
-            this.listeBoutons.get(3).setEnabled(true);
-            this.listeBoutons.get(4).setEnabled(true);
-            this.listeBoutons.get(5).setEnabled(true);
-            this.selectionForme = 1;
+            // disabled le bouton
+            this.btnCarre.setEnabled(false);
+            // enabled les autres boutons
+            this.btnRond.setEnabled(true);
+            this.btnLigne.setEnabled(true);
+            this.btnText.setEnabled(true);
+
+            frame.setFormeSelectionnee(1);
         }
-        else if(e.getSource() == this.listeBoutons.get(1))
+        if (e.getSource() == this.btnRond)
         {
-            this.listeBoutons.get(0).setEnabled(true);
-            this.listeBoutons.get(1).setEnabled(false);
-            this.listeBoutons.get(2).setEnabled(true);
-            this.listeBoutons.get(3).setEnabled(true);
-            this.listeBoutons.get(4).setEnabled(true);
-            this.listeBoutons.get(5).setEnabled(true);
-            this.selectionForme = 2;
+            // disabled le bouton
+            this.btnRond.setEnabled(false);
+            // enabled les autres boutons
+            this.btnCarre.setEnabled(true);
+            this.btnLigne.setEnabled(true);
+            this.btnText.setEnabled(true);
+
+            frame.setFormeSelectionnee(2);
         }
-        else if(e.getSource() == this.listeBoutons.get(2))
+        if (e.getSource() == this.btnLigne)
         {
-            this.listeBoutons.get(0).setEnabled(true);
-            this.listeBoutons.get(1).setEnabled(true);
-            this.listeBoutons.get(2).setEnabled(false);
-            this.listeBoutons.get(3).setEnabled(true);
-            this.listeBoutons.get(4).setEnabled(true);
-            this.listeBoutons.get(5).setEnabled(true);
-            this.selectionForme = 3;
+            // disabled le bouton
+            this.btnLigne.setEnabled(false);
+            // enabled les autres boutons
+            this.btnCarre.setEnabled(true);
+            this.btnRond.setEnabled(true);
+            this.btnText.setEnabled(true);
+
+            frame.setFormeSelectionnee(3);
         }
-        else if(e.getSource() == this.listeBoutons.get(3))
+        if (e.getSource() == this.btnText)
         {
-            this.listeBoutons.get(0).setEnabled(true);
-            this.listeBoutons.get(1).setEnabled(true);
-            this.listeBoutons.get(2).setEnabled(true);
-            this.listeBoutons.get(3).setEnabled(false);
-            this.listeBoutons.get(4).setEnabled(true);
-            this.listeBoutons.get(5).setEnabled(true);
-            this.selectionForme = 4;
+            // disabled le bouton
+            this.btnText.setEnabled(false);
+            // enabled les autres boutons
+            this.btnCarre.setEnabled(true);
+            this.btnRond.setEnabled(true);
+            this.btnLigne.setEnabled(true);
+            frame.setFormeSelectionnee(4);
         }
-        else if(e.getSource() == this.listeBoutons.get(4))
-        {
-            this.listeBoutons.get(0).setEnabled(true);
-            this.listeBoutons.get(1).setEnabled(true);
-            this.listeBoutons.get(2).setEnabled(true);
-            this.listeBoutons.get(3).setEnabled(true);
-            this.listeBoutons.get(4).setEnabled(false);
-            this.listeBoutons.get(5).setEnabled(true);
-            this.selectionForme = 5;
-        }
-        else if(e.getSource() == this.listeBoutons.get(5)) {
+		if (e.getSource() == this.btnUndo)
+		{
+			frame.undoDessin();
+		}
+        if (e.getSource() == this.btnPleinVide) {
             frame.setFormePleine();
-            if (frame.estPleine()) {
-                this.listeBoutons.get(5).setText("Plein");
-                this.listeBoutons.get(5).setBackground(Color.GREEN);
+            if (frame.estPleine() == true) {
+                this.btnPleinVide.setBackground(Color.GREEN);
+                this.btnPleinVide.setText("Plein");
             } else {
-                this.listeBoutons.get(5).setText("Vide");
-                this.listeBoutons.get(5).setBackground(Color.WHITE);
+                this.btnPleinVide.setBackground(Color.RED);
+                this.btnPleinVide.setText("Vide");
             }
         }
     }
 
-    public int getSelectionForme()
+    /**
+     * Methode qui permet de recuperer la forme selectionnee
+     * @return
+     */
+    public int getFormeSelectionnee()
     {
-        return this.selectionForme;
+        return this.formeSelectionnee;
     }
 }

@@ -12,17 +12,30 @@ import java.util.ArrayList;
 import main.Controleur;
 import metier.Dessin;
 
+/**
+ * Classe qui gère le serveur
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
 public class ServeurDessin {
 	//private ArrayList<Dessin> dessins = new ArrayList<>();
 	private ArrayList<ClientDessin> clients = new ArrayList<>();
 	private Controleur ctrl;
-	
+
+	/**
+	 * Constructeur de la classe ServeurDessin
+	 *
+	 * @param ctrl
+	 *            Le controleur
+	 * @throws IOException
+	 */
 	public ServeurDessin(Controleur ctrl) throws IOException {
 		this.ctrl = ctrl;
 		ctrl.setServeur(this);
-		// Créer un socket serveur pour écouter les connexions des clients 
+		// Créer un socket serveur pour écouter les connexions des clients
 		ServerSocket serverSocket = new ServerSocket(1234);
-		
+
 
 		while (true) {
 			// Accepter une connexion entrante
@@ -40,7 +53,7 @@ public class ServeurDessin {
 				}
 			}
 
-			// Créer un thread pour gérer chaque client 
+			// Créer un thread pour gérer chaque client
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -70,7 +83,7 @@ public class ServeurDessin {
 							// Ajouter le dessin à la liste
 							synchronized (dessins) {
 								dessins.add(dessin);
-								envoiDessinIHM(dessin); 
+								envoiDessinIHM(dessin);
 							}
 						}
 					} catch (SocketException e) {
@@ -85,7 +98,12 @@ public class ServeurDessin {
 		}
 	}
 
-	//Methodes pour envoyer les dessins aux clients en tant que serveur
+	/**
+	 * Envoi le dessin à tous les clients
+	 *
+	 * @param dessinString
+	 *            Le dessin sous forme de chaine de caractères
+	 */
 	public void envoiDessinAll(String dessinString) {
 		System.out.println("Envoi du dessin à tous les clients {" + dessinString + "}");
 		synchronized (clients) {
@@ -100,6 +118,12 @@ public class ServeurDessin {
 		}
 	}
 
+	/**
+	 * Envoi le dessin à l'IHM
+	 *
+	 * @param dessin
+	 *            Le dessin
+	 */
 	public void envoiDessinIHM(Dessin dessin) {
 		System.out.println("7: Envoi du dessin à l'IHM en tant que serveur");
 		ctrl.ajouterDessinIHM(dessin);

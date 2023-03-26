@@ -10,6 +10,12 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+/**
+ * Panel qui contient les dessins du client
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
 public class PanelDessin extends JPanel {
 
 	private FramePaint frame;
@@ -19,15 +25,23 @@ public class PanelDessin extends JPanel {
 	private boolean dessinTermine = false;
 	private boolean formePleine = false;
 	private String texte;
-	private ArrayList<Dessin> dessinsClient;
+	private ArrayList<Dessin> dessins;
 	private Controleur ctrl;
 
+	/**
+	 * Constructeur du PanelDessin
+	 *
+	 * @param frame
+	 *            La frame qui contient le panel
+	 * @param controleur
+	 *            Le controleur
+	 */
 	public PanelDessin(FramePaint frame, Controleur controleur) {
 		this.frame = frame;
 		this.ctrl = controleur;
 		this.setBackground(Color.WHITE);
 		// ArrayList pour stocker les dessins du client
-		this.dessinsClient = new ArrayList<Dessin>();
+		this.dessins = new ArrayList<Dessin>();
 		setBackground(Color.WHITE);
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -61,13 +75,16 @@ public class PanelDessin extends JPanel {
 		});
 	}
 
+	/**
+	 * Permet de dessiner les formes
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		if (x1 != 0 && x2 != 0 && y1 != 0 && y2 != 0) {
 			// On redesine les dessins du client en fonction de le l'arrayList
-			if (!this.dessinsClient.isEmpty()) {
-				for (Dessin dessin : dessinsClient) {
+			if (!this.dessins.isEmpty()) {
+				for (Dessin dessin : dessins) {
 					g.setColor(dessin.getCouleur());
 					switch (dessin.getType()) {
 						case Dessin.CARRE:
@@ -112,7 +129,7 @@ public class PanelDessin extends JPanel {
 					y = Math.min(y1, y2);
 					if (dessinTermine) {
 						Dessin dessin = new Dessin(this.formeSelectionnee, x, y, width, height, couleurSelectionnee, formePleine, null);
-						dessinsClient.add(dessin);
+						dessins.add(dessin);
 						ctrl.envoyerDessin(dessin);
 						dessinTermine = false;
 					}
@@ -129,7 +146,7 @@ public class PanelDessin extends JPanel {
 					x = Math.min(x1, x2);
 					y = Math.min(y1, y2);
 					if (dessinTermine) {
-						dessinsClient.add(new Dessin(this.formeSelectionnee, x, y, width, height, couleurSelectionnee, formePleine, ""));
+						dessins.add(new Dessin(this.formeSelectionnee, x, y, width, height, couleurSelectionnee, formePleine, ""));
 						dessinTermine = false;
 					}
 					if (formePleine) {
@@ -141,7 +158,7 @@ public class PanelDessin extends JPanel {
 				case Dessin.LIGNE:
 					// Ligne
 					if (dessinTermine) {
-						dessinsClient.add(new Dessin(this.formeSelectionnee, x1, y1, x2, y2, couleurSelectionnee, false, ""));
+						dessins.add(new Dessin(this.formeSelectionnee, x1, y1, x2, y2, couleurSelectionnee, false, ""));
 						dessinTermine = false;
 					}
 					g.drawLine(x1, y1, x2, y2);
@@ -150,7 +167,7 @@ public class PanelDessin extends JPanel {
 					// Texte
 					g.drawString(texte, x1, y1);
 					if (dessinTermine) {
-						dessinsClient.add(new Dessin(this.formeSelectionnee, x1, y1, 0, 0, couleurSelectionnee, false, texte));
+						dessins.add(new Dessin(this.formeSelectionnee, x1, y1, 0, 0, couleurSelectionnee, false, texte));
 						dessinTermine = false;
 					}
 					break;
@@ -158,43 +175,72 @@ public class PanelDessin extends JPanel {
 		}
 	}
 
+	/**
+	 * Permet de changer la forme
+	 * @param formeSelectionnee
+	 */
 	public void setFormeSelectionnee(int formeSelectionnee) {
 		this.formeSelectionnee = formeSelectionnee;
 	}
 
+	/**
+	 * Permet de récupérer la forme
+	 * @return
+	 */
 	public int getSelectionForme() {
 		return this.formeSelectionnee;
 	}
 
+	/**
+	 * Permet de changer la couleur de la forme
+	 * @param couleurSelectionnee
+	 */
 	public void setCouleurSelectionnee(Color couleurSelectionnee) {
 		this.couleurSelectionnee = couleurSelectionnee;
 	}
 
+	/**
+	 * Permet de supprimer le dernier dessin de la liste
+	 */
 	public void undoDessin() {
-		if (!dessinsClient.isEmpty()) {
-			dessinsClient.remove(dessinsClient.size() - 1);
+		if (!dessins.isEmpty()) {
+			dessins.remove(dessins.size() - 1);
 			this.revalidate();
 			this.repaint();
 			frame.majIHM();
 		}
 	}
 
+	/**
+	 * Permet de changer la forme en plein ou vide
+	 */
 	public void setFormePleine() {
 		this.formePleine = !formePleine;
 	}
 
+	/**
+	 * Permet de récupérer la forme en plein ou vide
+	 * @return boolean
+	 */
 	public boolean estPleine() {
 		return formePleine;
 	}
 
+	/**
+	 * Permet d'ajouter un dessin à la liste et de redessiner le panel
+	 */
 	public void ajouterDessin(Dessin dessin) {
-		this.dessinsClient.add(dessin);
+		this.dessins.add(dessin);
 		this.revalidate();
 		this.repaint();
 	}
 
-	public ArrayList<Dessin> getDessinsClient() {
-		return dessinsClient;
+	/**
+	 * Permet de récupérer la liste des dessins
+	 * @return ArrayList<Dessin>
+	 */
+	public ArrayList<Dessin> getDessins() {
+		return dessins;
 	}
 
 }

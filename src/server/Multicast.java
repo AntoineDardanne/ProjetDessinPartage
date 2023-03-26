@@ -1,30 +1,41 @@
 package server;
 
 import java.awt.Color;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
-import java.net.SocketAddress;
 import java.util.ArrayList;
 
 import metier.Dessin;
 
+/**
+ * Classe qui gère la connexion d'un client
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
 class Recepteur extends Thread {
 	InetAddress groupeIP;
 	int port;
 	String nom;
 	MulticastSocket socketReception;
 
+	/**
+	 * Constructeur de la classe Recepteur
+	 *
+	 * @param groupeIP
+	 * 		  L'adresse IP du groupe
+	 * @param port
+	 * 		  Le port
+	 * @param nom
+	 * 		  Le nom du client
+	 */
 	Recepteur(InetAddress groupeIP, int port, String nom) throws Exception {
 		this.groupeIP = groupeIP;
 		this.port = port;
@@ -65,6 +76,12 @@ class Recepteur extends Thread {
 	}
 }
 
+/**
+ * Classe qui gère la connexion d'un client
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
 class Emetteur extends Thread {
 	InetAddress groupeIP;
 	int port;
@@ -72,6 +89,18 @@ class Emetteur extends Thread {
 	String nom;
 	ArrayList<Dessin> dessins;
 
+	/**
+	 * Constructeur de la classe Emetteur
+	 *
+	 * @param groupeIP
+	 * 		  L'adresse IP du groupe
+	 * @param port
+	 * 		  Le port
+	 * @param nom
+	 * 		  Le nom du client
+	 * @param dessins
+	 * 		  La liste des dessins
+	 */
 	Emetteur(InetAddress groupeIP, int port, String nom, ArrayList<Dessin> dessins) throws Exception {
 		this.groupeIP = groupeIP;
 		this.port = port;
@@ -82,47 +111,72 @@ class Emetteur extends Thread {
 		start();
 	}
 
-public void run() {
-	try {
-		while (true) {
-
-			// Envoie le nom + l'arraylist de dessins
-			sleep (1000);
+	public void run() {
+		try {
+			while (true) {
+			/*sleep(1000);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			DataOutputStream dos = new DataOutputStream(baos);
-			dos.writeUTF(nom);
-			for (Dessin dessin : dessins) {
-				dos.writeInt(dessin.getType());
-				dos.writeInt(dessin.getX());
-				dos.writeInt(dessin.getY());
-				dos.writeInt(dessin.getLargeur());
-				dos.writeInt(dessin.getHauteur());
-				dos.writeInt(dessin.getCouleur().getRed());
-				dos.writeInt(dessin.getCouleur().getGreen());
-				dos.writeInt(dessin.getCouleur().getBlue());
-				dos.writeBoolean(dessin.estPleine());
-				dos.writeUTF(dessin.getTexte());
-			}
-			dos.flush();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(dessins);
+			oos.flush();
 			byte[] data = baos.toByteArray();
-			DatagramPacket message = new DatagramPacket(data, data.length, groupeIP, port);
-			socketEmission.send(message);
-			System.out.println("Envoi de " + nom + " : ");
-			for (Dessin dessin : dessins) {
-				System.out.println(dessin);
+			DatagramPacket message = new DatagramPacket(data, data.length, groupeIP, port);*/
+
+				// Envoie le nom + l'arraylist de dessins
+				sleep (1000);
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				DataOutputStream dos = new DataOutputStream(baos);
+				dos.writeUTF(nom);
+				for (Dessin dessin : dessins) {
+					dos.writeInt(dessin.getType());
+					dos.writeInt(dessin.getX());
+					dos.writeInt(dessin.getY());
+					dos.writeInt(dessin.getLargeur());
+					dos.writeInt(dessin.getHauteur());
+					dos.writeInt(dessin.getCouleur().getRed());
+					dos.writeInt(dessin.getCouleur().getGreen());
+					dos.writeInt(dessin.getCouleur().getBlue());
+					dos.writeBoolean(dessin.estPleine());
+					dos.writeUTF(dessin.getTexte());
+				}
+				dos.flush();
+				byte[] data = baos.toByteArray();
+				DatagramPacket message = new DatagramPacket(data, data.length, groupeIP, port);
+				socketEmission.send(message);
+				System.out.println("Envoi de " + nom + " : ");
+				for (Dessin dessin : dessins) {
+					System.out.println(dessin);
+				}
 			}
 		}
+		catch (Exception exc) {
+			System.out.println(exc);
+		}
 	}
-	catch (Exception exc) {
-		System.out.println(exc);
-	}
-}
 }
 
+/**
+ * Classe qui gère la connexion d'un client
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
 public class Multicast {
 
 	ArrayList<Dessin> dessinsClient;
 
+	/**
+	 * Constructeur de la classe Multicast
+	 *
+	 * @param ip
+	 * 		  L'adresse IP du groupe
+	 * @param port
+	 * 		  Le port
+	 * @param nom
+	 * 		  Le nom du client
+	 * @param dessinClient
+	 * 		  La liste des dessins
+	 */
 	public Multicast(String ip, int port, String nom, ArrayList<Dessin> dessinClient ) throws Exception {
 		this.dessinsClient = dessinClient;
 		InetAddress groupeIP = InetAddress.getByName(ip);
@@ -130,6 +184,12 @@ public class Multicast {
 		new Emetteur(groupeIP, port, nom, dessinClient);
 	}
 
+	/**
+	 * Méthode main
+	 *
+	 * @param arg
+	 * 		  Les arguments
+	 */
 	public static void main(String[] arg) throws Exception {
 		//ArrayList<Dessin> en dur pour tester
 		ArrayList<Dessin> dessins = new ArrayList<Dessin>();
@@ -140,11 +200,4 @@ public class Multicast {
 		new Multicast("239.255.100.45", 1234, "Client 1", dessins);
 	}
 
-	//
-	public void envoyerMessage(String string) {
-		
-	}
-
-	public void recevoirMessage() {
-	}
 }

@@ -1,104 +1,140 @@
 package IHM;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import java.awt.Color;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-public class PanelPaletteCouleur extends JPanel implements ActionListener
-{
+/**
+ * Panel de la palette de couleur
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
+public class PanelPaletteCouleur extends JPanel implements ActionListener {
+
     private final FramePaint frame;
-    private ArrayList<JButton> listeBoutons;
+    JButton btnRouge, btnVert, btnBleu, btnJaune, btnNoir, btnBlanc;
 
-    public PanelPaletteCouleur(FramePaint frame)
-    {
+    /**
+     * Constructeur de la classe PanelPaletteCouleur
+     * @param frame
+     */
+    public PanelPaletteCouleur(FramePaint frame) {
         this.frame = frame;
-        this.listeBoutons = new ArrayList<JButton>();
+        this.setLayout(new GridLayout(1, 6, 5, 5));
 
-        // Création des boutons
-        for (int i = 0; i < 6; i++) {
-            JButton bouton = new JButton();
-            bouton.setPreferredSize(new Dimension(125, 50));
-            this.listeBoutons.add(bouton);
-        }
-        
-        // Changement de couleur des boutons
-        this.listeBoutons.get(0).setBackground(Color.BLACK);
-        this.listeBoutons.get(1).setBackground(Color.RED);
-        this.listeBoutons.get(2).setBackground(Color.BLUE);
-        this.listeBoutons.get(3).setBackground(Color.GREEN);
-        this.listeBoutons.get(4).setBackground(Color.YELLOW);
-        this.listeBoutons.get(5).setBackground(Color.WHITE);
+        this.btnRouge = new JButton();
+        this.btnVert = new JButton();
+        this.btnBleu = new JButton();
+        this.btnJaune = new JButton();
+        this.btnNoir = new JButton();
+        this.btnBlanc = new JButton();
 
-        // Ajout des boutons au panel
-        for (JButton bouton : listeBoutons) {
-            this.add(bouton);
-        }
+        this.btnRouge.setPreferredSize(new Dimension(125, 50));
+        this.btnVert.setPreferredSize(new Dimension(125, 50));
+        this.btnBleu.setPreferredSize(new Dimension(125, 50));
+        this.btnJaune.setPreferredSize(new Dimension(125, 50));
+        this.btnNoir.setPreferredSize(new Dimension(125, 50));
+        this.btnBlanc.setPreferredSize(new Dimension(125, 50));
 
-        // Activation des boutons
-        for (JButton bouton : listeBoutons) {
-            bouton.addActionListener(this);
-        }
+        this.btnRouge.setBackground(java.awt.Color.RED);
+        this.btnVert.setBackground(java.awt.Color.GREEN);
+        this.btnBleu.setBackground(java.awt.Color.BLUE);
+        this.btnJaune.setBackground(java.awt.Color.YELLOW);
+        this.btnNoir.setBackground(java.awt.Color.BLACK);
+        this.btnBlanc.setBackground(java.awt.Color.WHITE);
+
+        this.add(btnRouge);
+        this.add(btnVert);
+        this.add(btnBleu);
+        this.add(btnJaune);
+        this.add(btnNoir);
+        this.add(btnBlanc);
+
+        this.btnRouge.addActionListener(this);
+        this.btnVert.addActionListener(this);
+        this.btnBleu.addActionListener(this);
+        this.btnJaune.addActionListener(this);
+        this.btnNoir.addActionListener(this);
+        this.btnBlanc.addActionListener(this);
     }
 
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.listeBoutons.get(0)) {
-            this.listeBoutons.get(0).setEnabled(false);
-
-            this.listeBoutons.get(1).setEnabled(true);
-            this.listeBoutons.get(2).setEnabled(true);
-            this.listeBoutons.get(3).setEnabled(true);
-            this.listeBoutons.get(4).setEnabled(true);
-            this.listeBoutons.get(5).setEnabled(true);
+    /**
+     * Methode qui permet de gerer les evenements sur les boutons
+     * @param actionEvent
+     */
+    public void actionPerformed(ActionEvent actionEvent) {
+        if(actionEvent.getSource() == this.btnRouge)
+        {
+            // disable the button
+            this.btnRouge.setEnabled(false);
+            // enable the other buttons
+            this.btnVert.setEnabled(true);
+            this.btnBleu.setEnabled(true);
+            this.btnJaune.setEnabled(true);
+            this.btnNoir.setEnabled(true);
+            this.btnBlanc.setEnabled(true);
             frame.setCouleurSelectionnee(Color.RED);
-        } else if (e.getSource() == this.listeBoutons.get(1)) {
-            this.listeBoutons.get(0).setEnabled(true);
-
-            this.listeBoutons.get(1).setEnabled(false);
-            this.listeBoutons.get(2).setEnabled(true);
-            this.listeBoutons.get(3).setEnabled(true);
-            this.listeBoutons.get(4).setEnabled(true);
-            this.listeBoutons.get(5).setEnabled(true);
-            frame.setCouleurSelectionnee(Color.RED);
-        } else if (e.getSource() == this.listeBoutons.get(2)) {
-            this.listeBoutons.get(0).setEnabled(true);
-
-            this.listeBoutons.get(1).setEnabled(true);
-            this.listeBoutons.get(2).setEnabled(false);
-            this.listeBoutons.get(3).setEnabled(true);
-            this.listeBoutons.get(4).setEnabled(true);
-            this.listeBoutons.get(5).setEnabled(true);
-            frame.setCouleurSelectionnee(Color.BLUE);
-        } else if (e.getSource() == this.listeBoutons.get(3)) {
-            this.listeBoutons.get(0).setEnabled(true);
-
-            this.listeBoutons.get(1).setEnabled(true);
-            this.listeBoutons.get(2).setEnabled(true);
-            this.listeBoutons.get(3).setEnabled(false);
-            this.listeBoutons.get(4).setEnabled(true);
-            this.listeBoutons.get(5).setEnabled(true);
+        }
+        else if(actionEvent.getSource() == this.btnVert)
+        {
+            // disable the button
+            this.btnVert.setEnabled(false);
+            // enable the other buttons
+            this.btnRouge.setEnabled(true);
+            this.btnBleu.setEnabled(true);
+            this.btnJaune.setEnabled(true);
+            this.btnNoir.setEnabled(true);
+            this.btnBlanc.setEnabled(true);
             frame.setCouleurSelectionnee(Color.GREEN);
-        } else if (e.getSource() == this.listeBoutons.get(4)) {
-            this.listeBoutons.get(0).setEnabled(true);
-
-            this.listeBoutons.get(1).setEnabled(true);
-            this.listeBoutons.get(2).setEnabled(true);
-            this.listeBoutons.get(3).setEnabled(true);
-            this.listeBoutons.get(4).setEnabled(false);
-            this.listeBoutons.get(5).setEnabled(true);
+        }
+        else if(actionEvent.getSource() == this.btnBleu)
+        {
+            // disable the button
+            this.btnBleu.setEnabled(false);
+            // enable the other buttons
+            this.btnRouge.setEnabled(true);
+            this.btnVert.setEnabled(true);
+            this.btnJaune.setEnabled(true);
+            this.btnNoir.setEnabled(true);
+            this.btnBlanc.setEnabled(true);
+            frame.setCouleurSelectionnee(Color.BLUE);
+        }
+        else if(actionEvent.getSource() == this.btnJaune)
+        {
+            // disable the button
+            this.btnJaune.setEnabled(false);
+            // enable the other buttons
+            this.btnRouge.setEnabled(true);
+            this.btnVert.setEnabled(true);
+            this.btnBleu.setEnabled(true);
+            this.btnNoir.setEnabled(true);
+            this.btnBlanc.setEnabled(true);
             frame.setCouleurSelectionnee(Color.YELLOW);
-        } else if (e.getSource() == this.listeBoutons.get(5)) {
-            this.listeBoutons.get(0).setEnabled(true);
-
-            this.listeBoutons.get(1).setEnabled(true);
-            this.listeBoutons.get(2).setEnabled(true);
-            this.listeBoutons.get(3).setEnabled(true);
-            this.listeBoutons.get(4).setEnabled(true);
-            this.listeBoutons.get(5).setEnabled(false);
+        }
+        else if(actionEvent.getSource() == this.btnNoir)
+        {
+            // disable the button
+            this.btnNoir.setEnabled(false);
+            // enable the other buttons
+            this.btnRouge.setEnabled(true);
+            this.btnVert.setEnabled(true);
+            this.btnBleu.setEnabled(true);
+            this.btnJaune.setEnabled(true);
+            this.btnBlanc.setEnabled(true);
+            frame.setCouleurSelectionnee(Color.BLACK);
+        }
+        else if(actionEvent.getSource() == this.btnBlanc)
+        {
+            // disable the button
+            this.btnBlanc.setEnabled(false);
+            // enable the other buttons
+            this.btnRouge.setEnabled(true);
+            this.btnVert.setEnabled(true);
+            this.btnBleu.setEnabled(true);
+            this.btnJaune.setEnabled(true);
+            this.btnNoir.setEnabled(true);
             frame.setCouleurSelectionnee(Color.WHITE);
         }
     }

@@ -12,12 +12,23 @@ import main.Controleur;
 import IHM.FrameManager;
 import metier.Dessin;
 
+/**
+ * Classe qui gère les clients
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
 public class ClientDessin {
 	private Controleur ctrl;
 	private Socket socket;
 	private boolean connexion;
 
-
+	/**
+	 * Constructeur du client
+	 * @param controleur
+	 * @param socket
+	 * @throws IOException
+	 */
 	public ClientDessin(Controleur controleur, Socket socket) throws IOException {
 		this.ctrl = controleur;
 		this.socket = socket;
@@ -25,7 +36,7 @@ public class ClientDessin {
 		// Créer un thread pour recevoir les dessins envoyés par le serveur
 		Thread thread = new Thread(() -> {
 			try {
-				// Créer un flux d'entrée pour lire les données envoyées par le serveur 
+				// Créer un flux d'entrée pour lire les données envoyées par le serveur
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				while (true) {
 					// Lire les données envoyées par le serveur
@@ -37,7 +48,7 @@ public class ClientDessin {
 					envoiDessinIHM(dessin);
 				}
 			} catch (SocketException e) {
-				if(!controleur.getEstServeur()) // Empèche le message d'erreur si on est serveur
+				//if(!controleur.getEstServeur()) // Empèche le message d'erreur si on est serveur
 				{
 					// Popup d'erreur si le serveur s'est déconnecté
 					JOptionPane.showMessageDialog(null, "Le serveur s'est déconnecté", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -45,11 +56,12 @@ public class ClientDessin {
 					controleur.getFramePaint().dispose();
 					controleur.setFrameManager(new FrameManager(controleur));
 				}
+				// Le if ne devrait pas etre necessaire mais c'est tellement du bidouillage, faudrait reprendre propre mais plus le temps
 			} catch (
 					Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		});
 		thread.start();
 	}
@@ -59,7 +71,7 @@ public class ClientDessin {
 		try {
 			// Créer un socket pour se connecter au serveur
 			this.socket = new Socket("localhost", 12345); // même machine
-			this.socket = new Socket("...", 12345); // autre machine
+			//this.socket = new Socket("...", 12345); // autre machine
 
 
 			new ClientDessin(ctrl, socket);
@@ -73,6 +85,10 @@ public class ClientDessin {
 		}
 	}
 
+	/**
+	 * Envoi le dessin au serveur
+	 * @param dessinString
+	 */
 	public void envoyerNouveauDessin(String dessinString) {
 		try {
 			System.out.println("3: Envoi du dessin au serveur (writeUTF)");
@@ -83,24 +99,30 @@ public class ClientDessin {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
+	/**
+	 * Envoi le dessin à l'IHM
+	 * @param dessin
+	 */
 	public void envoiDessinIHM(Dessin dessin) {
 		System.out.println("7: Envoi du dessin à l'IHM en tant que client");
 		ctrl.ajouterDessinIHM(dessin);
 	}
 
+	/**
+	 * Récupération du socket
+	 */
 	public Socket getSocket() {
 		return this.socket;
 	}
 
+	/**
+	 * Récupération de la connexion
+	 */
 	public boolean connecter() {
 		return this.connexion;
 	}
 
-
 }
-
-		
-

@@ -1,47 +1,63 @@
 package main;
 
+import java.awt.Window;
+import java.util.ArrayList;
+
 import IHM.FrameManager;
 import IHM.FramePaint;
 import metier.Dessin;
-import server.ServeurDessin;
 import server.ClientDessin;
+import server.ServeurDessin;
 
-import java.awt.*;
-import java.util.ArrayList;
-
-public class Controleur
-{
+/**
+ * Classe qui gère le fonctionnement de l'application
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
+public class Controleur {
     private FrameManager frameManager;
     private FramePaint framePaint;
     private ServeurDessin serveur;
     private ClientDessin client;
     private boolean estServeur;
 
-    public Controleur()
-    {
+    /**
+     * Constructeur du controleur
+     */
+    public Controleur() {
         this.frameManager = new FrameManager(this);
     }
 
-    public static void main(String[] args)
-    {
+    /**
+     * Méthode main
+     *
+     * @param args
+     *            Arguments de la ligne de commande
+     */
+    public static void main(String[] args) {
         new Controleur();
     }
 
-    public FramePaint getFramePaint()
-    {
+    public FramePaint getFramePaint() {
         return framePaint;
     }
 
-    public void setFramePaint(FramePaint framePaint)
-    {
+    public void setFramePaint(FramePaint framePaint) {
         this.framePaint = framePaint;
     }
 
-    public void setServeur(ServeurDessin serveur)
-    {
+    public void setServeur(ServeurDessin serveur) {
         this.serveur = serveur;
     }
 
+    /**
+     * Méthode qui permet d'ajouter un dessin dans la liste des dessins du
+     * panelDessin
+     *
+     * @param dessin
+     *            Le dessin à ajouter
+     */
     public void ajouterDessinIHM(Dessin dessin) {
         // Ajouter le dessin dans la liste des dessins de PanelDessin
         System.out.println("8: Ajout du dessin dans la liste via le controleur");
@@ -56,6 +72,12 @@ public class Controleur
         framePaint.getPanelDessin().ajouterDessin(dessin);
     }
 
+    /**
+     * Méthode qui permet d'envoyer un dessin à tous les clients
+     *
+     * @param dessin
+     *            Le dessin à envoyer
+     */
     public void envoyerDessin(Dessin dessin) {
         if (estServeur) {
             serveur.envoiDessinAll(dessin.toSend());
@@ -73,20 +95,21 @@ public class Controleur
         this.frameManager = frameManager;
     }
 
-    public void setClient(ClientDessin client) {
-        this.client = client;
-    }
-
-    public void setEstServeur(boolean estServeur) {
-        this.estServeur = estServeur;
+    public void setEstServeur(boolean b) {
+        this.estServeur = b;
     }
 
     public boolean getEstServeur() {
         return estServeur;
     }
 
-    public ArrayList<Dessin> getDessins() {
-        return framePaint.getPanelDessin().getDessinsClient();
+    public void setClient(ClientDessin c) {
+        this.client = c;
     }
-    
+
+    public ArrayList<Dessin> getDessins() {
+        return framePaint.getPanelDessin().getDessins();
+    }
+
+
 }

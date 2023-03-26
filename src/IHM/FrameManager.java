@@ -12,7 +12,13 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
-// Frame permettant de choisir entre le mode serveur ou client
+/**
+ * Frame qui permet de choisir entre le mode serveur et le mode client
+ *
+ * @author Antoine Dardanne, Noemie Claccin
+ * @version 1.0
+ */
+
 public class FrameManager extends JFrame implements ActionListener {
 	Controleur ctrl;
 	JPanel panelChoixPseudo;
@@ -21,7 +27,12 @@ public class FrameManager extends JFrame implements ActionListener {
 	JButton btnServeur;
 	JButton btnClient;
 
-
+	/**
+	 * Constructeur de la FrameManager
+	 *
+	 * @param ctrl
+	 *            Le controleur
+	 */
 	public FrameManager(Controleur ctrl) {
 		this.ctrl = ctrl;
 		this.setTitle("PaintMulti - Choix du mode");
@@ -60,7 +71,6 @@ public class FrameManager extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.btnServeur) {
 			this.dispose();
@@ -93,7 +103,11 @@ public class FrameManager extends JFrame implements ActionListener {
 		}
 	}
 
-
+	/**
+	 * Méthode qui permet de récupérer le pseudo entré par l'utilisateur
+	 *
+	 * @return Le pseudo entré par l'utilisateur
+	 */
 	public String recupPseudo() {
 		do
 		{
