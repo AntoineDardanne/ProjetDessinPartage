@@ -1,177 +1,107 @@
 package server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.net.SocketException;
+import javax.swing.JOptionPane;
 
+import main.Controleur;
+import IHM.FrameManager;
 import metier.Dessin;
 
-public class ClientDessin extends Thread
-{
-    // Adresse IP et numéro de port du serveur
-    private static final String SERVER_IP = "localhost";
-    ArrayList<Dessin> dessins;
-    Socket clientSocket; 
-
-    public ClientDessin(Socket socket,ArrayList<Dessin> dessins )
-    {
-        this.clientSocket = socket;
-        this.dessins = dessins;
-
-        connexion();
-
-    }
-
-    public void connexion()
-    {
-        try
-        {
-            
-            clientSocket = new Socket(InetAddress.getLocalHost(),ServeurDessin.PORT);
-        
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-/* 
-    private void run()
-    {
-        setDessins
+public class ClientDessin {
+	private Controleur ctrl;
+	private Socket socket;
+	private boolean connexion;
 
 
-    }
-    */
+	public ClientDessin(Controleur controleur, Socket socket) throws IOException {
+		this.ctrl = controleur;
+		this.socket = socket;
 
-    public static String getIp()
-    {
-        return ClientDessin.SERVER_IP;
-    }
+		// Créer un thread pour recevoir les dessins envoyés par le serveur
+		Thread thread = new Thread(() -> {
+			try {
+				// Créer un flux d'entrée pour lire les données envoyées par le serveur 
+				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				while (true) {
+					// Lire les données envoyées par le serveur
+					String dessinString = in.readLine();
+					System.out.println("6: Reçu de " + socket.getInetAddress() + " : " + dessinString + "je suis " + this.getSocket().getInetAddress());
+					// Convertir la chaîne de caractères en objet Dessin
+					Dessin dessin = Dessin.fromString(dessinString);
+					// Ajouter le dessin à la liste
+					envoiDessinIHM(dessin);
+				}
+			} catch (SocketException e) {
+				//if(!controleur.getEstServeur()) // Empèche le message d'erreur si on est serveur
+				{
+					// Popup d'erreur si le serveur s'est déconnecté
+					JOptionPane.showMessageDialog(null, "Le serveur s'est déconnecté", "Erreur", JOptionPane.ERROR_MESSAGE);
+					//ferme l'application et relance le menu
+					controleur.getFramePaint().dispose();
+					controleur.setFrameManager(new FrameManager(controleur));
+				}
+				// Le if ne devrait pas etre necessaire mais c'est tellement du bidouillage, faudrait reprendre propre mais plus le temps
+			} catch (
+					Exception e) {
+				e.printStackTrace();
+			}
+			
+		});
+		thread.start();
+	}
 
-    public ArrayList<Dessin> getDessinsClient()
-    {
-        return dessins;
-    }
+	public ClientDessin(Controleur ctrl) {
+		// Se connecter au serveur
+		try {
+			// Créer un socket pour se connecter au serveur
+			this.socket = new Socket("localhost", 12345); // même machine
+			//this.socket = new Socket("...", 12345); // autre machine
 
+
+			new ClientDessin(ctrl, socket);
+			connexion = true;
+		} catch (Exception e) {
+			//Popup d'erreur si le serveur n'est pas lancé
+			JOptionPane.showMessageDialog(null, "Le serveur n'est pas lancé", "Erreur", JOptionPane.ERROR_MESSAGE);
+			//ferme l'application si le serveur n'est pas lancé et relance le menu
+			connexion = false;
+			new Controleur();
+		}
+	}
+
+	public void envoyerNouveauDessin(String dessinString) {
+		try {
+			System.out.println("3: Envoi du dessin au serveur (writeUTF)");
+			// Créer un flux de sortie pour envoyer le nouveau dessin au serveur
+			PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // true pour auto-flush (envoi immédiat), important !
+			// Envoyer la chaîne de caractères au serveur
+			out.println(dessinString);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void envoiDessinIHM(Dessin dessin) {
+		System.out.println("7: Envoi du dessin à l'IHM en tant que client");
+		ctrl.ajouterDessinIHM(dessin);
+	}
+
+	public Socket getSocket() {
+		return this.socket;
+	}
+
+	public boolean connecter() {
+		return this.connexion;
+	}
 
 
 }
 
+		
 
-
-
-
-/* 
-import java.io.*;
-import java.net.*;
-import java.util.Scanner;
-
-public class ClientDessin 
-{
-
-    // Adresse IP et numéro de port du serveur
-    private static final String SERVER_IP = "localhost";
-    private static final int PORT = 9001;
-
-    public static void main(String[] args) throws IOException 
-    {
-
-        // Connexion au serveur
-        Socket socket = new Socket(SERVER_IP, PORT);
-        System.out.println("Connecté au serveur de dessin sur le port " + PORT);
-
-        // Création d'un BufferedReader pour lire les données envoyées par le serveur
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-        // Boucle infinie pour attendre les données envoyées par le serveur
-        while (true) {
-            String dessin = in.readLine();
-
-            // Si les données sont vides, cela signifie que le serveur a fermé la connexion
-            if (dessin == null) {
-                System.out.println("Le serveur a fermé la connexion");
-                break;
-                }
-        // Affichage du dessin reçu
-        System.out.println(dessin);
-        }
-
-        // Fermeture de la connexion avec le serveur
-        socket.close();
-    }
-}
-*/
-
-/* 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.net.Socket;
-
-import javax.swing.JPanel;
-
-import IHM.PanelDessin;
-import IHM.FramePaint;
-import IHM.FrameManager;
-import main.Controleur;
-
-public class ClientDessin implements Runnable 
-{
-    private static final String SERVER_ADDRESS = "localhost";
-    private static final int SERVER_PORT = 1234;
-
-    private Socket serverSocket;
-    private Controleur ctrl;
-
-    public ClientDessin(Socket clientSocket) {
-        this.ctrl = new Controleur();
-        private Socket clientSocket;
-        
-        this.clientSocket = clientSocket;
-        
-
-        @Override
-        public void run() {
-            try {
-                while (true) {
-                    byte[] buffer = new byte[1024];
-                    int bytesRead = clientSocket.getInputStream().read(buffer);
-                    if (bytesRead == -1) {
-                        System.out.println("Client disconnected: " + clientSocket);
-                        ServeurDessin.getClients().remove(clientSocket);
-                        break;
-                    }
-                    String message = new String(buffer, 0, bytesRead);
-                    System.out.println("Received from client " + clientSocket + ": " + message);
-                    ServeurDessin.broadcast(message);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-        /* 
-        try {
-            serverSocket = new Socket(SERVER_ADDRESS, SERVER_PORT);
-            System.out.println("Connectée aux serveur " + SERVER_ADDRESS + ":" + SERVER_PORT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FrameManager fm = new FrameManager(ctrl);
-        
-        
-    }
-
-    
-
-}  
-
-public static void main(String[] args) {
-    new ClientDessin();
-}
-*/
