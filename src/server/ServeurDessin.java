@@ -19,7 +19,6 @@ import metier.Dessin;
  * @version 1.0
  */
 public class ServeurDessin {
-	//private ArrayList<Dessin> dessins = new ArrayList<>();
 	private ArrayList<ClientDessin> clients = new ArrayList<>();
 	private Controleur ctrl;
 
