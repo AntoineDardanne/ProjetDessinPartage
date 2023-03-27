@@ -33,7 +33,7 @@ public class ServeurDessin {
 		this.ctrl = ctrl;
 		ctrl.setServeur(this);
 		// Créer un socket serveur pour écouter les connexions des clients
-		ServerSocket serverSocket = new ServerSocket(1234);
+		ServerSocket serverSocket = new ServerSocket(5678);
 
 
 		while (true) {

@@ -70,7 +70,7 @@ public class ClientDessin {
 		// Se connecter au serveur
 		try {
 			// Créer un socket pour se connecter au serveur
-			this.socket = new Socket("localhost", 12345); // même machine
+			this.socket = new Socket("localhost", 5678); // même machine
 			//this.socket = new Socket("...", 12345); // autre machine
 
 
